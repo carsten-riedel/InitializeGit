@@ -1,3 +1,4 @@
+echo changes in mock.cmd downloaded (raw.githubusercontent.com) since there populated 
 echo mock.cmd x
 
 
