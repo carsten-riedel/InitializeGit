@@ -1,4 +1,4 @@
-Write-Host "STUB Press any key to continue..." -NoNewline
+Write-Host "STUB Press any key to continue...`n" -NoNewline
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
 Write-Host "`n"
 
