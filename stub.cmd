@@ -57,9 +57,9 @@ mkdir "%MOCKPATH%" > nul 2>&1
 
 if EXIST "%MOCKPATH%\mock.cmd" (
    del /Q "%MOCKPATH%\mock.cmd"
-   bitsadmin /transfer "mockcmd" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.cmd" "%MOCKPATH%\mock.cmd" >NUL 2>&1
+   bitsadmin /transfer "mockcmd1" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.cmd" "%MOCKPATH%\mock.cmd" >NUL 2>&1
 ) else (
-   bitsadmin /transfer "mockcmd" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.cmd" "%MOCKPATH%\mock.cmd" >NUL 2>&1
+   bitsadmin /transfer "mockcmd2" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.cmd" "%MOCKPATH%\mock.cmd" >NUL 2>&1
 )
 
 REM Start the mock.cmd end the stub
