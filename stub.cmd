@@ -1,4 +1,5 @@
 @echo off
+echo stub.cmd downloaded and running.
 
 SET GITDLTEMPDIR=%TEMP%\DownloadGitPortable
 SET LOCALAPPDATAPORTABLEGIT=%LocalAppData%\PortableGit
