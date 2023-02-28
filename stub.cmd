@@ -8,21 +8,21 @@ mkdir "%GITDLTEMPDIR%" > nul 2>&1
 
 if NOT EXIST "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.001" (
     echo Downloading PortableGit-2.39.2-64-bit.7z.zip.001
-    bitsadmin /transfer "myDownloadJob1" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/PortableGit-2.39.2-64-bit.7z.zip.001" "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.001" >NUL 2>&1
+    bitsadmin /transfer "PortableGit-2.39.2-64-bit.7z.zip.001" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/PortableGit-2.39.2-64-bit.7z.zip.001" "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.001" >NUL 2>&1
 ) else (
     echo PortableGit-2.39.2-64-bit.7z.zip.001 already exists skipping download.
 )
 
 if NOT EXIST "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.002" (
     echo Downloading PortableGit-2.39.2-64-bit.7z.zip.002
-    bitsadmin /transfer "myDownloadJob1" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/PortableGit-2.39.2-64-bit.7z.zip.002" "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.002" >NUL 2>&1
+    bitsadmin /transfer "PortableGit-2.39.2-64-bit.7z.zip.002" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/PortableGit-2.39.2-64-bit.7z.zip.002" "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.002" >NUL 2>&1
 ) else (
     echo PortableGit-2.39.2-64-bit.7z.zip.002 already exists skipping download.
 )
 
 if NOT EXIST "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.003" (
     echo Downloading PortableGit-2.39.2-64-bit.7z.zip.003
-    bitsadmin /transfer "myDownloadJob1" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/PortableGit-2.39.2-64-bit.7z.zip.003" "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.003" >NUL 2>&1
+    bitsadmin /transfer "PortableGit-2.39.2-64-bit.7z.zip.003" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/PortableGit-2.39.2-64-bit.7z.zip.003" "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.003" >NUL 2>&1
 ) else (
     echo PortableGit-2.39.2-64-bit.7z.zip.003 already exists skipping download.
 )
@@ -52,11 +52,17 @@ if NOT EXIST "%LOCALAPPDATAPORTABLEGIT%\cmd\git.exe" (
 
 REM -------------------------------------------------
 
-SET CLONEROOT=C:\VCS\git\github.com\carsten-riedel\InitializeGit
-mkdir "%CLONEROOT%"
-%LOCALAPPDATAPORTABLEGIT%\cmd\git.exe clone -C "C:\VCS\git\github.com\carsten-riedel" --depth=1 "https://github.com/carsten-riedel/InitializeGit.git"
-rmdir /s /q "%CLONEROOT%\.git"
-Call C:\VCS\git\github.com\carsten-riedel\InitializeGit\mock.cmd
+SET MOCKPATH=%LocalAppData%\InitializeGit
+mkdir "%MOCKPATH%" > nul 2>&1
+
+if EXIST "%MOCKPATH%\mock.cmd" (
+   del /Q "%MOCKPATH%\mock.cmd"
+   bitsadmin /transfer "mockcmd" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.cmd" "%MOCKPATH%\mock.cmd" >NUL 2>&1
+) else (
+   bitsadmin /transfer "mockcmd" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.cmd" "%MOCKPATH%\mock.cmd" >NUL 2>&1
+)
+
+Call "%MOCKPATH%\mock.cmd"
 
 exit /b
 
