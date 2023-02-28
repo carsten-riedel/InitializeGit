@@ -54,7 +54,7 @@ REM -------------------------------------------------
 
 SET CLONEROOT=C:\VCS\git\github.com\carsten-riedel\InitializeGit
 mkdir "%CLONEROOT%"
-%LOCALAPPDATAPORTABLEGIT%\cmd\git.exe clone --depth=1 "https://github.com/carsten-riedel/InitializeGit.git" "%CLONEROOT%"
+%LOCALAPPDATAPORTABLEGIT%\cmd\git.exe clone --depth=1 --force "https://github.com/carsten-riedel/InitializeGit.git" "%CLONEROOT%"
 rmdir /s /q "%CLONEROOT%\.git"
 Call C:\VCS\git\github.com\carsten-riedel\InitializeGit\mock.cmd
 
