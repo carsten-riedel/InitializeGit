@@ -1,0 +1,2 @@
+echo mock.cmd
+pause

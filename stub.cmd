@@ -46,9 +46,11 @@ if NOT EXIST "%LOCALAPPDATAPORTABLEGIT%\cmd\git.exe" (
     echo git.exe already exists skipping extraction.
 )
 
-SET CLONEROOT=C:\VCS\git\github.com\carsten-riedel
+SET CLONEROOT=C:\VCS\git\github.com\carsten-riedel\InitializeGit
 mkdir "%CLONEROOT%"
-%LOCALAPPDATAPORTABLEGIT%\cmd\git.exe -C "%CLONEROOT%" clone "https://github.com/carsten-riedel/InitializeGit.git"
+%LOCALAPPDATAPORTABLEGIT%\cmd\git.exe -C clone --depth=1 "https://github.com/carsten-riedel/InitializeGit.git" "%CLONEROOT%"
+rmdir /s /q "%CLONEROOT%\.git"
+Call C:\VCS\git\github.com\carsten-riedel\InitializeGit\mock.cmd
 pause
 exit /b
 
