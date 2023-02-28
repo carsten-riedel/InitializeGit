@@ -26,12 +26,16 @@ if NOT EXIST "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.003" (
     echo PortableGit-2.39.2-64-bit.7z.zip.003 already exists skipping download.
 )
 
+REM -------------------------------------------------
+
 if NOT EXIST "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip" (
     echo Joining splitted zip files
     copy /b "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.001" + "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.002" + "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip.003" "%GITDLTEMPDIR%\PortableGit-2.39.2-64-bit.7z.zip"  >NUL 2>&1
 ) else (
     echo PortableGit-2.39.2-64-bit.7z.zip already exists skipping join splitted files.
 )
+
+REM -------------------------------------------------
 
 mkdir %LOCALAPPDATAPORTABLEGIT%  > nul 2>&1
 
@@ -46,12 +50,14 @@ if NOT EXIST "%LOCALAPPDATAPORTABLEGIT%\cmd\git.exe" (
     echo git.exe already exists skipping extraction.
 )
 
+REM -------------------------------------------------
+
 SET CLONEROOT=C:\VCS\git\github.com\carsten-riedel\InitializeGit
 mkdir "%CLONEROOT%"
-%LOCALAPPDATAPORTABLEGIT%\cmd\git.exe -C clone --depth=1 "https://github.com/carsten-riedel/InitializeGit.git" "%CLONEROOT%"
+%LOCALAPPDATAPORTABLEGIT%\cmd\git.exe clone --depth=1 "https://github.com/carsten-riedel/InitializeGit.git" "%CLONEROOT%"
 rmdir /s /q "%CLONEROOT%\.git"
 Call C:\VCS\git\github.com\carsten-riedel\InitializeGit\mock.cmd
-pause
+
 exit /b
 
 :UnZipFile <ExtractTo> <newzipfile>
