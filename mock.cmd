@@ -1,4 +1,4 @@
-echo mock.cmd
+echo mock.cmd x
 
 pause
 exit
