@@ -56,6 +56,7 @@ SET MOCKPATH=%LocalAppData%\InitializeGit
 mkdir "%MOCKPATH%" > nul 2>&1
 
 if EXIST "%MOCKPATH%\mock.cmd" (
+   echo del
    del /Q "%MOCKPATH%\mock.cmd"
    bitsadmin /transfer "mockcmd" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.cmd" "%MOCKPATH%\mock.cmd" >NUL 2>&1
 ) else (
@@ -65,7 +66,7 @@ if EXIST "%MOCKPATH%\mock.cmd" (
 REM Start the mock.cmd end the stub
 START "Mock.cmd" "%comspec%" /C "%MOCKPATH%\mock.cmd"
 REM Call "%MOCKPATH%\mock.cmd"
-
+pause
 exit /b
 
 :UnZipFile <ExtractTo> <newzipfile>
