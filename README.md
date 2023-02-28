@@ -8,17 +8,8 @@ bitsadmin /transfer "RunStub" "https://raw.githubusercontent.com/carsten-riedel/
 ```
 
 
-$FileName = '$env:LocalAppData\InitializeGit\stub.ps1' ; if (Test-Path $FileName) { Remove-Item $FileName }
 
+Powershell
 ```
-powershell -command "(new-object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/stub.ps1','$env:LocalAppData\InitializeGit\stub.ps1') ; &'$env:LocalAppData\InitializeGit\stub.ps1'"
+$FileName = "$env:LocalAppData\InitializeGit\stub.ps1" ; if (Test-Path $FileName) { Remove-Item $FileName } ;(new-object System.Net.WebClient).DownloadFile("https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/stub.ps1","$FileName") ; &"$FileName"
 ```
-
-
-powershell.exe -Command "& { $FileName = '$env:LocalAppData\InitializeGit\stub.ps1' ; Write-Host $FileName ; (new-object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/stub.ps1','$FileName') ;  }"
-
-
-powershell.exe -Command "& { $FileName = '$env:LocalAppData\InitializeGit\stub.ps1' ; Write-Host $FileName ; }"
-
-
-$FileName = "$env:LocalAppData\InitializeGit\stub.ps1" ; if (Test-Path $FileName) { Remove-Item $FileName } ;(new-object System.Net.WebClient).DownloadFile("https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/stub.ps1","$env:LocalAppData\InitializeGit\stub.ps1") ; &"$FileName"
