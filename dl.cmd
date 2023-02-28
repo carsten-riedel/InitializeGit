@@ -1,2 +1,5 @@
-bitsadmin /transfer myDownloadJob https://github.com/git-for-windows/git/releases/download/v2.39.2.windows.1/PortableGit-2.39.2-32-bit.7z.exe C:\temp\PortableGit-2.39.2-32-bit.7z.exe
+mkdir C:\temp
+bitsadmin /transfer myDownloadJob https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/PortableGit-2.39.2-64-bit.7z.zip.001 C:\temp\PortableGit-2.39.2-64-bit.7z.zip.001
+bitsadmin /transfer myDownloadJob https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/PortableGit-2.39.2-64-bit.7z.zip.002 C:\temp\PortableGit-2.39.2-64-bit.7z.zip.002
+bitsadmin /transfer myDownloadJob https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/PortableGit-2.39.2-64-bit.7z.zip.003 C:\temp\PortableGit-2.39.2-64-bit.7z.zip.003
 rundll32 zipfldr.dll,RouteTheCall "myarchive.zip", "C:\Users\Username\Downloads"
