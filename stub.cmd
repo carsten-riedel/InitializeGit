@@ -62,7 +62,9 @@ if EXIST "%MOCKPATH%\mock.cmd" (
    bitsadmin /transfer "mockcmd" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.cmd" "%MOCKPATH%\mock.cmd" >NUL 2>&1
 )
 
-Call "%MOCKPATH%\mock.cmd"
+REM Start the mock.cmd end the stub
+START "Mock.cmd" "%comspec%" /C "%MOCKPATH%\mock.cmd"
+REM Call "%MOCKPATH%\mock.cmd"
 
 exit /b
 

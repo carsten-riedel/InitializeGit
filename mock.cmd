@@ -1,5 +1,8 @@
-echo changes in mock.cmd downloaded (raw.githubusercontent.com) since there populated 
-echo mock.cmd x
+@echo off
+CLS
+SET pgit=%LocalAppData%\PortableGit\cmd\git.exe
+echo Changes in mock.cmd downloaded from raw.githubusercontent.com take some time since there populated with the content providers. 
+echo %pgit%
 
 
 
