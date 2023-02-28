@@ -41,7 +41,6 @@ mkdir %LOCALAPPDATAPORTABLEGIT%  > nul 2>&1
 
 setlocal
 cd /d %~dp0
-echo Extacting files to "%LOCALAPPDATAPORTABLEGIT%"
 
 if NOT EXIST "%LOCALAPPDATAPORTABLEGIT%\cmd\git.exe" (
     echo Extracting PortableGit-2.39.2-64-bit.7z.zip
