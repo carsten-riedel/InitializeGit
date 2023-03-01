@@ -46,20 +46,15 @@ Write-Host "STUB Press any key to continue..."
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
 
 
+$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.001'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.001" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile($src,$trg); &"$trg"
+$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.002'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.002" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile($src,$trg); &"$trg"
+$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.003'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.003" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile($src,$trg); &"$trg"
 
-
-$FileName = "$env:LocalAppData\InitializeGit\mock.ps1" ; if (Test-Path $FileName) { Remove-Item $FileName } ; $dir = [System.IO.Path]::GetDirectoryName($FileName);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile('https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.ps1',"$FileName")
 
 $src = 'https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.ps1'; $trg = "$env:LocalAppData\InitializeGit\mock.ps1" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile($src,$trg); &"$trg"
 
-Write-Host ".$FileName."
 
-(New-Object System.Net.WebClient).DownloadFile("https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.ps1", "C:\Temp\archive.zip")
 
-Write-Host "The main script has finished2"
-&"$FileName"
-
-DownloadFile "C:\Temp" "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/stub.cmd"
 
 Write-Host "The main script has finished"
 
