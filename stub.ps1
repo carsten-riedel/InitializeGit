@@ -46,12 +46,12 @@ Write-Host "STUB Press any key to continue..."
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
 
 
-$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.001'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.001" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile($src,$trg); &"$trg"
-$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.002'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.002" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile($src,$trg); &"$trg"
-$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.003'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.003" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile($src,$trg); &"$trg"
+$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.001'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.001" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;Write-Output "Download and run $src";(new-object System.Net.WebClient).DownloadFile($src,$trg);
+$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.002'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.002" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;Write-Output "Download and run $src";(new-object System.Net.WebClient).DownloadFile($src,$trg);
+$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.003'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.003" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;Write-Output "Download and run $src";(new-object System.Net.WebClient).DownloadFile($src,$trg);
 
 
-$src = 'https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.ps1'; $trg = "$env:LocalAppData\InitializeGit\mock.ps1" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile($src,$trg); &"$trg"
+$src = 'https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.ps1'; $trg = "$env:LocalAppData\InitializeGit\mock.ps1" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile($src,$trg);Write-Output "Download and run $src"; &"$trg"
 
 
 
