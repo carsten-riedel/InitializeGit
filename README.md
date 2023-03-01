@@ -10,5 +10,5 @@ del /Q "%localappdata%\InitializeGit\stub.cmd" & bitsadmin /transfer "RunStub" "
 
 Powershell
 ```
-$src = "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/stub.ps1"; $trg = "$env:LocalAppData\InitializeGit\stub.ps1" ; if (Test-Path $trg) {Remove-Item $trg}; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile($src,$trg); &"$trg"
+$src = "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/stub.ps1"; $trg = "$env:LocalAppData\InitializeGit\stub.ps1" ; if (Test-Path $trg) {Remove-Item $trg}; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;Write-Output "Download and run $src";(new-object System.Net.WebClient).DownloadFile($src,$trg); &"$trg"
 ```
