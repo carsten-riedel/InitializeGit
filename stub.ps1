@@ -39,7 +39,7 @@ function DownloadFile {
     return $location
 }
 
-function JoinFiles {
+function JoinFilesx {
  
     param (
         [Parameter(Mandatory)]
@@ -54,13 +54,37 @@ function JoinFiles {
     # Get all the split files in the folder and sort them by name
     $splitFiles = Get-ChildItem $folderPath -Filter "$splitFilePattern"  | Sort-Object Name
     $splitFiles = $splitFiles | Where-Object { $_.Name -notcontains "$newFileName" }
+    Remove-Item $folderPath\$newFileName
+
+
+
 
     # Loop through each split file and append its contents to the new file
-    foreach ($file in $splitFiles) {
-        Write-Host "Joining $($file.FullName) to $folderPath\$newFileName"
-        $content = Get-Content $file.FullName
-        Add-Content "$folderPath\$newFileName" $content
-    }
+
+        # Loop through each source file
+        foreach ($sourceFile in $splitFiles) {
+            # Create a FileStream object for the source file in read mode
+
+                # Create a new FileStream object for the destination file in write mode
+            $destinationStream = New-Object IO.FileStream("$folderPath\$newFileName", [IO.FileMode]::OpenOrCreate, [IO.FileAccess]::Write)  
+            $destinationStream.Seek(0, [IO.SeekOrigin]::End)
+            $sourceStream = New-Object IO.FileStream($sourceFile.FullName, [IO.FileMode]::Open, [IO.FileAccess]::Read)
+    
+            try {
+                # Copy the contents of the source file to the destination file using a buffer
+                $buffer = New-Object byte[] 4096
+                while ($true) {
+                    $bytesRead = $sourceStream.Read($buffer, 0, $buffer.Length)
+                    if ($bytesRead -eq 0) { break }
+                    $destinationStream.Write($buffer, 0, $bytesRead)
+                }
+            } finally {
+                # Close the FileStream object for the source file
+                $sourceStream.Close()
+                $destinationStream.Close()
+            }
+        }
+
 
     if ($removeSplit)
     {
@@ -71,10 +95,13 @@ function JoinFiles {
 }
 
 
+
+
+
 DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.001" -folder "$env:LocalAppData\InitializeGit"
 DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.002" -folder "$env:LocalAppData\InitializeGit"
 DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.003" -folder "$env:LocalAppData\InitializeGit"
-JoinFiles -folderPath "$env:LocalAppData\InitializeGit" -splitFilePattern "PortableGit-2.39.2-64-bit.7z.zip.*" -newFileName "PortableGit-2.39.2-64-bit.7z.zip"
+JoinFilesx -folderPath "$env:LocalAppData\InitializeGit" -splitFilePattern "PortableGit-2.39.2-64-bit.7z.zip.*" -newFileName "PortableGit-2.39.2-64-bit.7z.zip"
 
 #EXTRACT HERE
 Expand-Archive -Path "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip" -DestinationPath "$env:LocalAppData\InitializeGit\ex" -Force
