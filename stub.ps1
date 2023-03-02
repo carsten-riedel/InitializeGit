@@ -2,9 +2,9 @@ function DownloadFile {
  
     param (
         [Parameter(Mandatory)]
-        $folder,
+        $url,
         [Parameter(Mandatory)]
-        $url
+        $folder
     )
 
     $file = [System.IO.Path]::GetFileName($url)
@@ -39,22 +39,47 @@ function DownloadFile {
     return $location
 }
 
+function JoinFiles {
+ 
+    param (
+        [Parameter(Mandatory)]
+        $folderPath,
+        [Parameter(Mandatory)]
+        $splitFilePattern,
+        [Parameter(Mandatory)]
+        $newFileName,
+        $removeSplit = $false
+    )
+
+    # Get all the split files in the folder and sort them by name
+    $splitFiles = Get-ChildItem $folderPath -Filter "$splitFilePattern"  | Sort-Object Name
+    $splitFiles = $splitFiles | Where-Object { $_.Name -notcontains "$newFileName" }
+
+    # Loop through each split file and append its contents to the new file
+    foreach ($file in $splitFiles) {
+        Write-Host "Joining $($file.FullName) to $folderPath\$newFileName"
+        $content = Get-Content $file.FullName
+        Add-Content "$folderPath\$newFileName" $content
+    }
+
+    if ($removeSplit)
+    {
+        # Remove the split files
+        Remove-Item $folderPath\$splitFilePattern
+    }
+
+}
 
 
+DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.001" -folder "$env:LocalAppData\InitializeGit"
+DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.002" -folder "$env:LocalAppData\InitializeGit"
+DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.003" -folder "$env:LocalAppData\InitializeGit"
+JoinFiles -folderPath "$env:LocalAppData\InitializeGit" -splitFilePattern "PortableGit-2.39.2-64-bit.7z.zip.*" -newFileName "PortableGit-2.39.2-64-bit.7z.zip"
 
-Write-Host "STUB Press any key to continue..."
-$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+#EXTRACT HERE
 
-
-$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.001'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.001" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;Write-Output "Download $src";(new-object System.Net.WebClient).DownloadFile($src,$trg);
-$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.002'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.002" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;Write-Output "Download $src";(new-object System.Net.WebClient).DownloadFile($src,$trg);
-$src = 'https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.003'; $trg = "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip.003" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;Write-Output "Download $src";(new-object System.Net.WebClient).DownloadFile($src,$trg);
-
-
-$src = 'https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.ps1'; $trg = "$env:LocalAppData\InitializeGit\mock.ps1" ; if (Test-Path $trg) { Remove-Item $trg } ; $dir = [System.IO.Path]::GetDirectoryName($trg);$null = New-Item -Force -ItemType Directory -Path $dir;(new-object System.Net.WebClient).DownloadFile($src,$trg);Write-Output "Download and run $src"; &"$trg"
-
-
-
+DownloadFile -url "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.ps1" -folder "$env:LocalAppData\InitializeGit"
+; &"$env:LocalAppData\InitializeGit\mock.ps1"
 
 Write-Host "The main script has finished"
 
