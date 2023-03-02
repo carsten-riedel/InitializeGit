@@ -77,6 +77,7 @@ DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/Port
 JoinFiles -folderPath "$env:LocalAppData\InitializeGit" -splitFilePattern "PortableGit-2.39.2-64-bit.7z.zip.*" -newFileName "PortableGit-2.39.2-64-bit.7z.zip"
 
 #EXTRACT HERE
+Expand-Archive -Path "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip" -DestinationPath "$env:LocalAppData\InitializeGit\ex" -Force
 
 DownloadFile -url "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.ps1" -folder "$env:LocalAppData\InitializeGit"
 ; &"$env:LocalAppData\InitializeGit\mock.ps1"
