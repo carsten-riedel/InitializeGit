@@ -118,9 +118,9 @@ function ExpandArch {
 $param1 = $args[0]
 Write-Host "Param1 is: $param1"
 
-DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.001" -folder "$env:LocalAppData\InitializeGit\temp"
-DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.002" -folder "$env:LocalAppData\InitializeGit\temp"
-DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.003" -folder "$env:LocalAppData\InitializeGit\temp"
+DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.001" -folder "$env:LocalAppData\InitializeGit\temp" | Out-Null
+DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.002" -folder "$env:LocalAppData\InitializeGit\temp" | Out-Null
+DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.003" -folder "$env:LocalAppData\InitializeGit\temp" | Out-Null
 JoinFiles -folderPath "$env:LocalAppData\InitializeGit\temp" -splitFilePattern "PortableGit-2.39.2-64-bit.7z.zip.*" -newFileName "PortableGit-2.39.2-64-bit.7z.zip" -removeSplit $true
 ExpandArch -sourceFile "$env:LocalAppData\InitializeGit\temp\PortableGit-2.39.2-64-bit.7z.zip" -destFolder "$env:LocalAppData\InitializeGit\PortableGit" -removeSource $true
 
