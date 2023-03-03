@@ -12,7 +12,7 @@ function DownloadFile {
 
     If(!(test-path -PathType container $folder))
     {
-          New-Item -ItemType Directory -Path $folder
+          New-Item -ItemType Directory -Path $folder | Out-Null
     }
 
     try {
@@ -39,7 +39,7 @@ function DownloadFile {
     return $location
 }
 
-function JoinFilesx {
+function JoinFiles {
  
     param (
         [Parameter(Mandatory)]
@@ -54,20 +54,20 @@ function JoinFilesx {
     # Get all the split files in the folder and sort them by name
     $splitFiles = Get-ChildItem $folderPath -Filter "$splitFilePattern"  | Sort-Object Name
     $splitFiles = $splitFiles | Where-Object { $_.Name -notcontains "$newFileName" }
-    Remove-Item $folderPath\$newFileName
 
-
-
+    if (Test-Path "$folderPath\$newFileName") {
+        Remove-Item "$folderPath\$newFileName" -Force
+    }
 
     # Loop through each split file and append its contents to the new file
 
         # Loop through each source file
         foreach ($sourceFile in $splitFiles) {
             # Create a FileStream object for the source file in read mode
-
+            Write-Host "Joining file: $($sourceFile.FullName)"
                 # Create a new FileStream object for the destination file in write mode
             $destinationStream = New-Object IO.FileStream("$folderPath\$newFileName", [IO.FileMode]::OpenOrCreate, [IO.FileAccess]::Write)  
-            $destinationStream.Seek(0, [IO.SeekOrigin]::End)
+            $destinationStream.Seek(0, [IO.SeekOrigin]::End) | Out-Null
             $sourceStream = New-Object IO.FileStream($sourceFile.FullName, [IO.FileMode]::Open, [IO.FileAccess]::Read)
     
             try {
@@ -85,31 +85,51 @@ function JoinFilesx {
             }
         }
 
-
-    if ($removeSplit)
-    {
-        # Remove the split files
-        Remove-Item $folderPath\$splitFilePattern
-    }
-
+        if ($removeSplit)
+        {
+            foreach ($sourceFile in $splitFiles) {
+                Remove-Item $sourceFile.FullName
+            }
+        }
 }
 
+function ExpandArch {
 
+    param (
+        [Parameter(Mandatory)]
+        $sourceFile,
+        [Parameter(Mandatory)]
+        $destFolder,
+        $removeSource = $false
+    )
+   
+    $OriginalPref = $global:ProgressPreference
+    $global:ProgressPreference = "SilentlyContinue"
+    Write-Host "Expand-Archive: $sourceFile"
+    Expand-Archive -Path "$sourceFile" -DestinationPath "$destFolder" -Force
+    $global:ProgressPreference = $OriginalPref
 
+    if ($removeSource)
+    {
+        Remove-Item "$sourceFile"
+    }
+}
 
+$param1 = $args[0]
+Write-Host "Param1 is: $param1"
 
-DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.001" -folder "$env:LocalAppData\InitializeGit"
-DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.002" -folder "$env:LocalAppData\InitializeGit"
-DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.003" -folder "$env:LocalAppData\InitializeGit"
-JoinFilesx -folderPath "$env:LocalAppData\InitializeGit" -splitFilePattern "PortableGit-2.39.2-64-bit.7z.zip.*" -newFileName "PortableGit-2.39.2-64-bit.7z.zip"
+DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.001" -folder "$env:LocalAppData\InitializeGit\temp"
+DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.002" -folder "$env:LocalAppData\InitializeGit\temp"
+DownloadFile -url "https://github.com/carsten-riedel/InitializeGit/raw/main/PortableGit-2.39.2-64-bit.7z.zip.003" -folder "$env:LocalAppData\InitializeGit\temp"
+JoinFiles -folderPath "$env:LocalAppData\InitializeGit\temp" -splitFilePattern "PortableGit-2.39.2-64-bit.7z.zip.*" -newFileName "PortableGit-2.39.2-64-bit.7z.zip" -removeSplit $true
+ExpandArch -sourceFile "$env:LocalAppData\InitializeGit\temp\PortableGit-2.39.2-64-bit.7z.zip" -destFolder "$env:LocalAppData\InitializeGit\PortableGit" -removeSource $true
 
-#EXTRACT HERE
-Expand-Archive -Path "$env:LocalAppData\InitializeGit\PortableGit-2.39.2-64-bit.7z.zip" -DestinationPath "$env:LocalAppData\InitializeGit\ex" -Force
-
-DownloadFile -url "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.ps1" -folder "$env:LocalAppData\InitializeGit"
-; &"$env:LocalAppData\InitializeGit\mock.ps1"
+DownloadFile -url "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/mock.ps1" -folder "$env:LocalAppData\InitializeGit\temp"
+; &"$env:LocalAppData\InitializeGit\temp\mock.ps1"
 
 Write-Host "The main script has finished"
 
 Write-Host "STUB Press any key to continue..."
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+
+
