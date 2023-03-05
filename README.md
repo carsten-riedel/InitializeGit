@@ -4,10 +4,9 @@ This batch commandline will download the stub.cmd and exectue it.
 The stub.cmd will download,join and extract the PortableGit-2.39.2-64-bit to %LocalAppData%\PortableGit
 
 
-
-WinXP
+TBD: LowerCompatibility (Check XP)
 ```
-setlocal EnableDelayedExpansion & mkdir "%localappdata%\Init" & set script=Dim xHttp: Set xHttp = CreateObject("Microsoft.XMLHTTP"):Dim bStrm: Set bStrm = createobject("Adodb.Stream"): xHttp.Open "GET", "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/stub.cmd", False : xHttp.Send : with bStrm : .type = 1 : .open : .write xHttp.responseBody : .savetofile "%localappdata%\Init\stub.cmd", 2 : end with  & cmd /v /c "echo !script!" > "%localappdata%\Init\dl.vbs" & cscript.exe /nologo "%localappdata%\Init\dl.vbs" & del /Q "%localappdata%\Init\dl.vbs"  & call "%localappdata%\Init\stub.cmd"
+mkdir "%userprofile%\Init" & echo Set xHttp = CreateObject("MSXML2.ServerXMLHTTP") : Set bStrm = createobject("Adodb.Stream") : xHttp.setOption 2, 13056 : xHttp.Open "GET", "https://raw.githubusercontent.com/carsten-riedel/InitializeGit/main/stub.cmd", False : xHttp.Send : with bStrm : .type = 1 : .open : .write xHttp.responseBody : .savetofile "%userprofile%\Init\stub.cmd", 2 : end with  > "%userprofile%\Init\dl.vbs" & cscript.exe /nologo "%userprofile%\Init\dl.vbs" & del /Q "%userprofile%\Init\dl.vbs"  & call "%userprofile%\Init\stub.cmd"
 ```
 
 Win7
